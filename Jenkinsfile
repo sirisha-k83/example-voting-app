@@ -17,7 +17,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sirisha-k83/example_voting.git'
+                git branch: 'main', url: 'https://github.com/sirisha-k83/example-voting-app.git'
             }
         }
 
