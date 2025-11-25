@@ -1,0 +1,56 @@
+result Dockerfile
+
+create a docker file at the root of the folder
+From (since app written in nodejs we take node baseimage)
+
+every nodejs app this is installed:
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl tini && \
+    rm -rf /var/lib/apt/lists/*
+
+Tinibenefits: It protects you from software that accidentally creates zombie processes, which can (over time!) starve your entire system for PIDs (and make it unusable). It ensures that the default signal handlers work for the software you run in your Docker image.
+
+ rm -rf /var/lib/apt/lists/*
+this is something apt-get update can recreate: so can be removed to reduce file size
+
+copy  the json file
+COPY package*.json ./
+
+install the node modules
+RUN npm ci && \
+ npm cache clean --force && \
+ mv /usr/local/app/node_modules /node_modules
+
+if the extension is .py then its written in python
+for the voting app, 
+need to copy the requirements.txt in dockerfile
+
+------------------------
+
+writing Azure Pipelines
+
+Triggers: when the pipeline needs to trigger
+
+eg: someone commits to github repo, this pipeline needs to trigger
+
+Path based trigger
+
+stages:
+sub parts as jobs
+within jobs as steps
+variables
+
+-------------------
+to start the agent
+login as user not root on agent
+cd agent
+check docker with 
+docker pull hello-world
+also run the agent
+./run.sh
+you shd see the agent going online in the azure devops portal
+
+error: platform change: change the platform of the agent eg linux on the docker file under worker
+
+
+
