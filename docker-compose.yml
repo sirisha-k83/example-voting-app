@@ -56,7 +56,7 @@ services:
     volumes:
       - "./healthchecks:/healthchecks"
     healthcheck:
-      test: ["CMD-SHELL", "/bin/sh -c /healthchecks/redis.sh"]
+      test: ["CMD", "redis-cli", "ping"]
       interval: "5s"
       timeout: "5s"
       retries: 3
@@ -72,7 +72,7 @@ services:
       - "db-data:/var/lib/postgresql/data"
       - "./healthchecks:/healthchecks"
     healthcheck:
-      test: ["CMD-SHELL", "/bin/sh -c /healthchecks/postgres.sh"]
+      test: ["CMD", "pg_isready", "-U", "postgres", "-h", "127.0.0.1"]
       interval: "5s"
       timeout: "5s"
       retries: 3
