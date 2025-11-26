@@ -58,6 +58,8 @@ services:
     healthcheck:
     test: ["CMD-SHELL", "/bin/sh -c /healthchecks/redis.sh"]
     interval: "5s"
+    timeout: "5s"
+    reties: 3
     networks:
       - back-tier
 
