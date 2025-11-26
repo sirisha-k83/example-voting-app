@@ -20,7 +20,7 @@ RUN dotnet restore -a ${TARGETARCH:-x64}
 
 COPY . .
 # The command should explicitly reference the Worker.csproj file
-RUN dotnet publish Worker.csproj -c release -o /app -a $TARGETARCH --self-contained false --no-restore
+RUN dotnet publish Worker.csproj -c release -o /app -p:SelfContained=false --no-restore
 
 # app image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
