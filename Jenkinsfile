@@ -21,23 +21,28 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool 'Sonar_Scanner'
-                    withCredentials([string(credentialsId: 'sonar_token', variable: 'SONAR_TOKEN_SECRET')]) {
-                        withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                            sh """
-                                ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                -Dsonar.projectName=${SONAR_PROJECT_NAME} \
-                                -Dsonar.login=${SONAR_LOGIN_TOKEN}
-                            """
-                        }
-                    }
+    stage('SonarQube Analysis') {
+       steps {
+        script {
+            def scannerHome = tool 'Sonar_Scanner'
+            
+            // FIX: Assign the credential to a variable name (SONAR_TOKEN_SECRET)
+            withCredentials([string(credentialsId: 'sonar_token', variable: 'SONAR_TOKEN_SECRET')]) { 
+                withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \\
+                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \\
+                        -Dsonar.projectName=${SONAR_PROJECT_NAME} \\
+                        -Dsonar.login=${SONAR_TOKEN_SECRET} \\
+                        
+                        # Add the necessary analysis parameters here
+                        -Dsonar.sources=vote,result,worker 
+                    """
                 }
             }
         }
+    }
+}
 
         stage('Quality Gate Check') {
             steps {
