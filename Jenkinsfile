@@ -85,10 +85,10 @@ pipeline {
                 script {
                     sh """
                         # Bring down old stack
-                        docker compose down || true
+                        docker-compose down || true
 
                         # Deploy latest build
-                        docker compose up -d
+                        docker-compose up -d
                     """
                 }
             }
