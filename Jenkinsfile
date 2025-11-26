@@ -48,11 +48,18 @@ pipeline {
         }
 
         stage('TRIVY FS Scan') {
-            steps {
-                sh "trivy fs . > trivyfs.txt"
-                archiveArtifacts artifacts: 'trivyfs.txt', onlyIfSuccessful: true
-            }
+           steps {
+            script {
+            sh """
+                # Set the cache directory to a writable location within the workspace
+                export TRIVY_FILESYSTEM_CACHE_DIR="\${WORKSPACE}/.trivycache"
+                
+                trivy fs . > trivyfs.txt
+            """
         }
+        archiveArtifacts artifacts: 'trivyfs.txt', onlyIfSuccessful: true
+    }
+}
 
         stage('Docker Build & Push') {
             steps {
