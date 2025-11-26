@@ -72,7 +72,7 @@ services:
       - "db-data:/var/lib/postgresql/data"
       - "./healthchecks:/healthchecks"
     healthcheck:
-      test: ["CMD-SHELL", "/bin/sh -c /healthchecks/postgress.sh"]
+      test: ["CMD-SHELL", "/bin/sh -c /healthchecks/postgres.sh"]
       interval: "5s"
       timeout: "5s"
       retries: 3
