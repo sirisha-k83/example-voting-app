@@ -22,11 +22,10 @@ pipeline {
         }
 
     stage('SonarQube Analysis') {
-       steps {
+      steps {
         script {
             def scannerHome = tool 'Sonar_Scanner'
             
-            // FIX: Assign the credential to a variable name (SONAR_TOKEN_SECRET)
             withCredentials([string(credentialsId: 'sonar_token', variable: 'SONAR_TOKEN_SECRET')]) { 
                 withSonarQubeEnv("${SONARQUBE_SERVER}") {
                     sh """
@@ -34,9 +33,7 @@ pipeline {
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \\
                         -Dsonar.projectName=${SONAR_PROJECT_NAME} \\
                         -Dsonar.login=${SONAR_TOKEN_SECRET} \\
-                        
-                        # Add the necessary analysis parameters here
-                        -Dsonar.sources=vote,result,worker 
+                        -Dsonar.sources=vote,result,worker
                     """
                 }
             }
