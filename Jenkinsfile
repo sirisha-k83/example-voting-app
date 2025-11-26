@@ -6,9 +6,9 @@ pipeline {
     }
 
     environment {
-        SONARQUBE_SERVER = 'Sonar_Server'
-        SONAR_PROJECT_KEY = '3-tier-new'
-        SONAR_PROJECT_NAME = '3-tier-new'
+        SONARQUBE_SERVER = 'sonar_server'
+        SONAR_PROJECT_KEY = 'newtest'
+        SONAR_PROJECT_NAME = 'newtest'
 
         DOCKER_REPOSITORY = 'sirishak83'
     }
