@@ -51,7 +51,7 @@ pipeline {
            steps {
             script {
             sh """
-                # Set the cache directory to a writable location within the workspace
+            
                 export TRIVY_FILESYSTEM_CACHE_DIR="\${WORKSPACE}/.trivycache"
                 
                 trivy fs . > trivyfs.txt
